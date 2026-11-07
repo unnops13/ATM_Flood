@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เฝ้าระวังตู้ ATM น้ำท่วม</title>
+<meta name="theme-color" content="#6b7f5e">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>เฝ้าระวังตู้ ATM ออมสิน · น้ำท่วม</h1>
+    <p id="meta">กำลังโหลดข้อมูล…</p>
+  </div>
+  <button id="refresh" aria-label="โหลดข้อมูลใหม่">โหลดใหม่</button>
+</header>
+<div id="banner" hidden></div>
+
+<section class="cards" id="cards" aria-label="สรุปสถานการณ์"></section>
+
+<section class="filters">
+  <label>ภาค
+    <select id="fRegion"><option value="">ทุกภาค</option></select>
+  </label>
+  <label>จังหวัด
+    <select id="fProv"><option value="">ทุกจังหวัด</option></select>
+  </label>
+  <label class="chk"><input type="checkbox" id="fOnly" checked> แสดงเฉพาะตู้ที่ได้รับผลกระทบ</label>
+</section>
+
+<main>
+  <div id="map" aria-label="แผนที่ตู้ ATM"></div>
+  <aside>
+    <h2>ต้องดำเนินการ <span id="count"></span></h2>
+    <ul id="list"></ul>
+  </aside>
+</main>
+
+<div id="detail" hidden>
+  <button id="close" aria-label="ปิด">✕</button>
+  <div id="detailBody"></div>
+</div>
+
+<footer>
+  ข้อมูลฝนและน้ำ: Open-Meteo / GloFAS · ตำแหน่งตู้และพื้นที่น้ำท่วมในเวอร์ชันนี้เป็นข้อมูลจำลองเพื่อสาธิต
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

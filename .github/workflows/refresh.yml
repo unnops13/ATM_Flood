@@ -1,0 +1,25 @@
+name: refresh-flood-risk
+on:
+  schedule: [{cron: "0 */3 * * *"}]
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python scripts/build_risk.py
+      - run: python scripts/notify.py --send
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          LINE_CHANNEL_TOKEN: ${{ secrets.LINE_CHANNEL_TOKEN }}
+          LINE_TO: ${{ secrets.LINE_TO }}
+      - run: |
+          git config user.name "flood-bot"; git config user.email "bot@users.noreply.github.com"
+          git add web/data/status.json data/last_levels.json
+          git diff --cached --quiet || (git commit -m "อัปเดตข้อมูลความเสี่ยง" && git push)
